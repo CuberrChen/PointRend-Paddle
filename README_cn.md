@@ -205,13 +205,13 @@ python -m paddle.distributed.launch train.py --config configs/pointrendfpn/point
 | 应用场景 | 图像分割 |
 | 支持硬件 | XPU、GPU、CPU |
 | 下载链接 | [PointRendFPN: 提取码：b8ai](https://pan.baidu.com/s/1RXgac1j1bYn76Yx0fTbQfw)|
-| 在线运行项目 | [AIStudio notebook]() 待做|
+| 在线运行项目 | [AIStudio notebook](https://aistudio.baidu.com/aistudio/clusterprojectdetail/2298566)|
 
 特别感谢百度paddle提供的平台和资源。
 
 **SemanticFPN+PointRend模型复现分析**：
 
-- 采用80000 iter，batch_size=16 for 4 GPUs(4 imgs for per gpu)，base_lr=0.01 warmup+poly的学习率策略，**SemanticFPN+PointRend with ResNet101模型在Cityscaps VAL数据集上达到了78.78的mIOU**。***说明：采用这个方案的原因是因为该训练设定下AIStudio提供的四卡脚本环境允许的1024×512输入最大的batch_size不到32(原文32)，若内存够用/使用多卡，还是推荐使用作者提供的参数。训练好的模型在最下面有链接。训练代码、train_0.log（78.78miou完整训练日志,位于ouput文件夹）都已经上传到仓库。* AIStudio上暂未公开项目，链接稍后公开提供。
-
+- 采用80000 iter，batch_size=16 for 4 GPUs(4 imgs for per gpu)，base_lr=0.01 warmup+poly的学习率策略，**SemanticFPN+PointRend with ResNet101模型在Cityscaps VAL数据集上达到了78.78的mIOU**。***说明：采用这个方案的原因是因为该训练设定下AIStudio提供的四卡脚本环境允许的1024×512输入最大的batch_size不到32(原文32)，若内存够用/使用多卡，还是推荐使用作者提供的参数。训练好的模型在最下面有链接。训练代码、train_0.log（78.78miou完整训练日志,位于ouput文件夹）都已经上传到仓库。* 
+- AIStudio 项目请选择pointrend_resnet101 2021-08-23 21:26:20版本
 Refrence:
 - [Paper Official PyTorch](https://github.com/facebookresearch/detectron2/tree/master/projects/PointRend)
