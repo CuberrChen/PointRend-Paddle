@@ -125,19 +125,21 @@ class PointHead(nn.Layer):
     nn.Conv1d) to predict the logit of input points. The fine-grained feature
     and coarse feature will be concatenate together for predication.
     Args:
-        num_fcs (int): Number of fc layers in the head. Default: 3.
-        in_channels ([int]]): Number of input channels. Default: 256.
-        fc_channels (int): Number of fc channels. Default: 256.
-        num_classes (int): Number of classes for logits. Default: 19.
-        class_agnostic (bool): Whether use class agnostic classification.
-            If so, the output channels of logits will be 1. Default: False.
-        coarse_pred_each_layer (bool): Whether concatenate coarse feature with
-            the output of each fc layer. Default: True.
-        conv_cfg (str|None): Dictionary to construct and config conv layer.
-            Default: dict(type='Conv1D'))
-        loss_point (dict): Dictionary to construct and config loss layer of
-            point head. Default: dict(type='CrossEntropyLoss', use_mask=True,
-            loss_weight=1.0).
+        in_channels(list):in channels of input features from Semantic FPN.Default:[256]
+        out_channels(int,optional):Number of fc channels. Default: 256.
+        num_fcs(int): Number of fc layers in the head. Default: 3.
+        coarse_pred_each_layer(bool): Whether concatenate coarse feature with the output of each fc layer. Default: True.
+        point_conv_cfg(str|None): to construct and config conv layer. Default:'Conv1D'
+        in_index(list):values indicate the indices of output of decoder in front.Default:[0]
+        num_points(int):the num of points in training.Default:2048
+        oversample_ratio(int):the oversample ratio in training.Default:3
+        importance_sample_ratio(float):importance_sample_ratio in training.Default:0.75
+        scale_factor(int):scale_factor for inference.Default:2
+        subdivision_steps(int):subdivision_steps for inference.Default:2
+        subdivision_num_points(int):subdivision_num_points for inference:Default:8196
+        dropout_ratio(float):Default:0
+        align_corners(bool):Default:False
+        input_transform(str):the transform method for input.Default: 'multiple_select'. or 'resize_concat'.
     """
 
     def __init__(self,
@@ -283,7 +285,6 @@ class PointHead(nn.Layer):
             seg_logits (Tensor): Semantic segmentation logits, shape (
                 batch_size, num_classes, height, width).
             uncertainty_func (func): uncertainty calculation function.
-            cfg (dict): Training config of point head.
         Returns:
             point_coords (Tensor): A tensor of shape (batch_size, num_points,
                 2) that contains the coordinates of ``num_points`` sampled
@@ -331,7 +332,6 @@ class PointHead(nn.Layer):
             seg_logits (Tensor): A tensor of shape (batch_size, num_classes,
                 height, width) for class-specific or class-agnostic prediction.
             uncertainty_func (func): uncertainty calculation function.
-            cfg (dict): Testing config of point head.
         Returns:
             point_indices (Tensor): A tensor of shape (batch_size, num_points)
                 that contains indices from [0, height x width) of the most
@@ -601,17 +601,42 @@ class FPNNeck(nn.Layer):
 @manager.MODELS.add_component
 class PointRendFPN(nn.Layer):
     """
-    implementation based on PaddlePaddle.
+    SemanticFPN+PointRend implementation based on PaddlePaddle.
+    <PointRend: Image Segmentation as Rendering>(https://arxiv.org/abs/1912.08193)
     Args:
-        num_classes (int): The unique number of target classes.
         backbone (Paddle.nn.Layer): Backbone network, currently support Resnet50/101.
         backbone_indices (tuple): Four values in the tuple indicate the indices of output of backbone.
-        enable_auxiliary_loss (bool, optional): A bool value indicates whether adding auxiliary loss. Default: False.
-        prior_size = 96, # prior map size: Cityscape768*768->96, PASCAL 64 ,ADE 60
+        num_classes (int): The unique number of target classes.
         align_corners (bool, optional): An argument of F.interpolate. It should be set to False when the feature size is even,
             e.g. 1024x512, otherwise it is True, e.g. 769x769. Default: False.
         pretrained (str, optional): The path or url of pretrained model. Default: None.
-    """
+        fpn_inplanes (list): The feature channels from backbone.
+        fpn_outplanes (int, optional): The output channels of FPN module. Default: 256.
+        fpn_align_corners (bool, optional): An argument of F.interpolate. It should be set to False when the feature size is even,
+        PFN_feature_strides (list,optional): The strides for input feature maps for PFN(Semantic FPN).stack_lateral. All strides suppose to be power of 2
+        PFN_in_channels (list,optional): The in channels for input feature maps for PFN(Semantic FPN)
+        PFN_channels(int): The out channel of feature maps of PFN(Semantic FPN)
+        PFN_in_index(list/tuple): values in the tuple indicate the indices of output of backbone for PFN use.
+        PFN_dropout_ratio(float,optional): dropout_ratio in PFN.
+        PFN_conv_cfg(str): conv cfg .Default:'Conv2D',
+        PFN_input_transform(str,optional):the transform method for input.Default: 'multiple_select'. or 'resize_concat'.
+        PFN_align_corners(bool):Default:False
+        point_in_channels(list):in channels of input features from Semantic FPN.Default:[256]
+        point_out_channels(int,optional):Number of fc channels. Default: 256.
+        point_num_fcs(int): Number of fc layers in the head. Default: 3.
+        point_coarse_pred_each_layer(bool): Whether concatenate coarse feature with the output of each fc layer. Default: True.
+        point_conv_cfg(str|None): to construct and config conv layer. Default:'Conv1D'
+        point_in_index(list):values indicate the indices of output of PFN.Default:[0]
+        point_num_points(int):the num of points in training.Default:2048
+        point_oversample_ratio(int):the oversample ratio in training.Default:3
+        point_importance_sample_ratio(float):importance_sample_ratio in training.Default:0.75
+        point_scale_factor(int):scale_factor for inference.Default:2
+        point_subdivision_steps(int):subdivision_steps for inference.Default:2
+        point_subdivision_num_points(int):subdivision_num_points for inference:Default:8196
+        point_dropout_ratio(float):Default:0
+        point_align_corners(bool):Default:False
+        point_input_transform(str):the transform method for input.Default: 'multiple_select'. or 'resize_concat'.
+        """
 
     def __init__(self,
                  backbone,
