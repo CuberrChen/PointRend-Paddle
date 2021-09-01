@@ -221,7 +221,7 @@ Special thanks to the platform and resources provided by Baidu paddle.
 **SemanticFPN+PointRend Model analysis**：
 
 - 80000 iter,batch_size=16 for 4 GPUs(4 imgs for per gpu),base_lr=0.01 warmup+poly,**SemanticFPN+PointRend with ResNet101 's best mIOU=78.78 at Cityscaps VAL dataset**.
-***Note: the reason for adopting this scheme is that the 4 cards 32g environment provided by aistudio allows 1024 × 512 enter the maximum batch_size can't reach 32(paper's setting). If the memory is enough / multiple cards are used, the parameters provided by the author are recommended. The trained model has a link at the bottom. The training code and train_0.log (79.6miou complete training log can be find in output/) have been uploaded to the repo* 
+***Note: the reason for adopting this scheme is that the 4 cards 32g environment provided by aistudio allows 1024 × 512 enter the maximum batch_size can't reach 32(paper's setting). If the memory is enough / multiple cards are used, the parameters provided by the author are recommended. The trained model has a link at the bottom. The training code and train_0.log (78.78 miou completed training log can be find in output/) have been uploaded to the repo* 
 
 Refrence:
 - [Paper Official PyTorch](https://github.com/facebookresearch/detectron2/tree/master/projects/PointRend)
