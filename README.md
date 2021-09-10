@@ -211,7 +211,7 @@ Please refer to the following list to check other models’ information
 | Framework Version | Paddle 2.0.2 |
 | Application Scenario | Image Segmentation |
 | Supported Hardwares | XPU GPU CPU |
-| Download Links | [PointRendFPN: 提取码：b8ai](https://pan.baidu.com/s/1RXgac1j1bYn76Yx0fTbQfw)|
+| Download Links | [PointRendFPN: code：33h7](https://pan.baidu.com/s/1UKpc4e2xBYalmP7hf8Fffw)|
 | Online Running |[AIStudio notebook](https://aistudio.baidu.com/aistudio/clusterprojectdetail/2298566)|
 
 ## 8 Customization
