@@ -205,7 +205,8 @@ python -m paddle.distributed.launch train.py --config configs/pointrendfpn/point
 | 应用场景 | 图像分割 |
 | 支持硬件 | XPU、GPU、CPU |
 | 下载链接 | [PointRendFPN: 提取码：33h7](https://pan.baidu.com/s/1UKpc4e2xBYalmP7hf8Fffw)|
-| 在线运行项目 | [AIStudio notebook](https://aistudio.baidu.com/aistudio/clusterprojectdetail/2298566)|
+| 在线运行项目 | [AIStudio 脚本](https://aistudio.baidu.com/aistudio/clusterprojectdetail/2298566)|
+| 在线运行项目 | [AIStudio notebook](https://aistudio.baidu.com/aistudio/projectdetail/2297103?contributionType=1)|
 
 特别感谢百度paddle提供的平台和资源。
 
