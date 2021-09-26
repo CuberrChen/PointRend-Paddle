@@ -212,8 +212,8 @@ Please refer to the following list to check other models’ information
 | Application Scenario | Image Segmentation |
 | Supported Hardwares | XPU GPU CPU |
 | Download Links | [PointRendFPN: code：33h7](https://pan.baidu.com/s/1UKpc4e2xBYalmP7hf8Fffw)|
-| Online Running |[AIStudio notebook](https://aistudio.baidu.com/aistudio/clusterprojectdetail/2298566)|
-
+| Online Running |[AIStudio shell](https://aistudio.baidu.com/aistudio/clusterprojectdetail/2298566)|
+| Online Running |[AIStudio notebook](https://aistudio.baidu.com/aistudio/projectdetail/2297103?contributionType=1)|
 ## 8 Customization
 
 Special thanks to the platform and resources provided by Baidu paddle.
